@@ -1,0 +1,186 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="color: gray">Product Mangement</a>
+    <button
+      class="button-style"
+      type="button "
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      ADD PRODUCT
+    </button>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- <form [formGroup]="products" id="msform">
+            <fieldset>
+              <input
+                type="text"
+                formControlName="name"
+                name="name"
+                class="form-control form-control-lg"
+                [ngClass]="{
+                  'is-invalid': productsInfo['name'].errors
+                }"
+              />
+              <textarea
+                rows="5"
+                cols="5"
+                formControlName="description"
+                placeholder="Write description"
+                class="form-control form-control-lg"
+                [ngClass]="{
+                  'is-invalid': productsInfo['description'].errors
+                }"
+              ></textarea>
+
+              <input
+                type="text"
+                formControlName="prix"
+                name="price"
+                placeholder="Price"
+                class="form-control form-control-lg"
+              />
+
+              <input
+                type="text"
+                formControlName="type"
+                name="type"
+                placeholder="Type"
+                class="form-control form-control-lg"
+              />
+
+              <input
+                (click)="add()"
+                type="submit"
+                name="submit"
+                class="submit"
+                value="Add Product"
+                data-bs-dismiss="modal"
+              />
+            </fieldset>
+          </form> -->
+
+          <form (ngSubmit)="add()" #productForm="ngForm" id="msform">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                [(ngModel)]="product.name"
+                class="form-control"
+                id="name"
+                name="name"
+                placeholder="Enter product name"
+                required
+                #name="ngModel"
+              />
+            </div>
+            <div [hidden]="!name.pristine" class="alert alert-danger">
+              Name is required
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea
+                rows="5"
+                cols="5"
+                placeholder="Write description"
+                [(ngModel)]="product.description"
+                class="form-control"
+                id="description"
+                name="description"
+                required
+                #description="ngModel"
+              ></textarea>
+            </div>
+            <div [hidden]="!description.pristine" class="alert alert-danger">
+              Description is required
+            </div>
+
+            <div class="form-group">
+              <label for="prix">Price</label>
+              <input
+                type="text"
+                [(ngModel)]="product.prix"
+                class="form-control"
+                id="prix"
+                name="prix"
+                placeholder="Enter Price (DH)"
+                required
+                #prix="ngModel"
+              />
+            </div>
+            <div [hidden]="!prix.pristine" class="alert alert-danger">
+              Price is required
+            </div>
+
+            <div class="form-group">
+              <label for="type">Type</label>
+              <input
+                type="text"
+                [(ngModel)]="product.type"
+                class="form-control"
+                id="type"
+                name="type"
+                placeholder="Enter Type"
+                #type="ngModel"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="product_size">Size</label>
+              <input
+                type="text"
+                [(ngModel)]="product.product_size"
+                class="form-control"
+                id="product_size"
+                name="product_size"
+                placeholder="Enter size"
+                #product_size="ngModel"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="stock_quantity">Stock Quantity</label>
+              <input
+                type="number"
+                [(ngModel)]="product.stock_quantity"
+                class="form-control"
+                id="stock_quantity"
+                name="stock_quantity"
+                placeholder="Enter Stock Quantity "
+                #stock_quantity="ngModel"
+              />
+            </div>
+            <button
+              type="submit"
+              [disabled]="!productForm.form.valid"
+              class="submit"
+              data-bs-dismiss="modal"
+            >
+              Add Product
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

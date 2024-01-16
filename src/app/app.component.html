@@ -1,0 +1,277 @@
+<app-navbar></app-navbar>
+<div class="container pt-4 mb-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let product of products">
+      <div class="card h-100">
+        <img src="..." class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">
+            <span *ngIf="product.description != null"
+              ><strong>Description: </strong>{{ product.description }}</span
+            >
+
+            <br *ngIf="product.prix != null" /><span
+              *ngIf="product.prix != null"
+              ><strong>Price (en DH) : </strong>{{ product.prix }}</span
+            >
+            <br *ngIf="product.type != null" /><span
+              *ngIf="product.type != null"
+              ><strong>Type : </strong>{{ product.type }}</span
+            >
+            <br *ngIf="product.stock_quantity != null" /><span
+              *ngIf="product.stock_quantity != null"
+              ><strong>Stock Quantity : </strong
+              >{{ product.stock_quantity }}</span
+            >
+            <br *ngIf="product.product_size != null" /><span
+              *ngIf="product.product_size != null"
+              ><strong>Size : </strong>{{ product.product_size }}</span
+            >
+          </p>
+        </div>
+        <div class="card-footer">
+          <small class="text-body-secondary">
+            <button
+              class="btn btn-success m-1 btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#showModal"
+              (click)="call3(product)"
+            >
+              <i class="bi bi-eye"></i>
+            </button>
+            <button
+              class="btn btn-primary m-1 btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#updateModal"
+              (click)="call1(product)"
+            >
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button
+              class="btn btn-danger m-1 btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteModal"
+              (click)="call2(product)"
+            >
+              <i class="bi bi-trash3"></i>
+            </button>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer
+  class="container-fluid text-center py-2 bg-body-tertiary"
+  style="color: gray"
+>
+  Developed By Hafsa El Akhdar
+</footer>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="updateModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="edit()" #editForm="ngForm" id="msform">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              [(ngModel)]="product.name"
+              class="form-control"
+              id="name"
+              name="name"
+              placeholder="Enter product name"
+              required
+              #name="ngModel"
+            />
+          </div>
+          <div [hidden]="!name.pristine" class="alert alert-danger">
+            Name is required
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              rows="5"
+              cols="5"
+              placeholder="Write description"
+              [(ngModel)]="product.description"
+              class="form-control"
+              id="description"
+              name="description"
+              required
+              #description="ngModel"
+            ></textarea>
+          </div>
+          <div [hidden]="!description.pristine" class="alert alert-danger">
+            Description is required
+          </div>
+
+          <div class="form-group">
+            <label for="prix">Price</label>
+            <input
+              type="text"
+              [(ngModel)]="product.prix"
+              class="form-control"
+              id="prix"
+              name="prix"
+              placeholder="Enter Price (DH)"
+              required
+              #prix="ngModel"
+            />
+          </div>
+          <div [hidden]="!prix.pristine" class="alert alert-danger">
+            Price is required
+          </div>
+
+          <div class="form-group">
+            <label for="type">Type</label>
+            <input
+              type="text"
+              [(ngModel)]="product.type"
+              class="form-control"
+              id="type"
+              name="type"
+              placeholder="Enter Type"
+              #type="ngModel"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="product_size">Size</label>
+            <input
+              type="text"
+              [(ngModel)]="product.product_size"
+              class="form-control"
+              id="product_size"
+              name="product_size"
+              placeholder="Enter size"
+              #product_size="ngModel"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="stock_quantity">Stock Quantity</label>
+            <input
+              type="number"
+              [(ngModel)]="product.stock_quantity"
+              class="form-control"
+              id="stock_quantity"
+              name="stock_quantity"
+              placeholder="Enter Stock Quantity "
+              #stock_quantity="ngModel"
+            />
+          </div>
+          <button
+            type="submit"
+            [disabled]="!editForm.form.valid"
+            class="submit btn btn-primary"
+          >
+            Edit Product
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Product</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">Are you sure ?</p>
+        <button type="submit" class="submit btn btn-danger" (click)="delete()">
+          delete Product
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="showModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Product Details</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="card h-100" style="border: none">
+          <!-- <img src="..." class="card-img-top" alt="..." /> -->
+          <div class="card-body">
+            <h5 class="card-title text-center">
+              {{ selectedProduct.name }}
+            </h5>
+            <p class="card-text">
+              <span *ngIf="selectedProduct.description != null"
+                ><strong>Description: </strong
+                >{{ selectedProduct.description }}</span
+              >
+
+              <br *ngIf="selectedProduct.prix != null" /><span
+                *ngIf="selectedProduct.prix != null"
+                ><strong>Price (DH) : </strong
+                >{{ selectedProduct.prix }}</span
+              >
+              <br *ngIf="selectedProduct.type != null" /><span
+                *ngIf="selectedProduct.type != null"
+                ><strong>Type : </strong>{{ selectedProduct.type }}</span
+              >
+              <br *ngIf="selectedProduct.stock_quantity != null" /><span
+                *ngIf="selectedProduct.stock_quantity != null"
+                ><strong>Stock Quantity : </strong
+                >{{ selectedProduct.stock_quantity }}</span
+              >
+              <br *ngIf="selectedProduct.product_size != null" /><span
+                *ngIf="selectedProduct.product_size != null"
+                ><strong>Size : </strong
+                >{{ selectedProduct.product_size }}</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
